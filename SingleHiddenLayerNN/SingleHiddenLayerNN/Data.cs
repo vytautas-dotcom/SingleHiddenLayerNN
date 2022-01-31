@@ -8,7 +8,7 @@ namespace SingleHiddenLayerNN
 {
     class Data
     {
-        double[][] rawData = new double[30][];
+        public double[][] rawData = new double[30][];
         public Data()
         {
             rawData[0] = new double[] { 1, 0, 1.4, 0.3, 1, 0, 0 };
