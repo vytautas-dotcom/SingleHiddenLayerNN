@@ -49,5 +49,112 @@ namespace SingleHiddenLayerNN
                 result[i] = new double[cols];
             return result;
         }
+
+        public void SetWeights(double[] weights)
+        {
+            int numWeights = (numInput + 1) * numHidden +
+                             (numHidden + 1) * numOutput;
+
+            if (weights.Length != numWeights)
+                throw new Exception("Incorrect weights array length");
+
+            int k = 0;
+
+            //picks all weights and biases accordingly for hidden and output layers
+
+            for (int i = 0; i < numInput; i++)
+                for (int j = 0; j < numHidden; j++)
+                    ihWeights[i][j] = weights[k++];
+
+            for (int i = 0; i < numHidden; i++)
+                hBiases[i] = weights[k++];
+
+            for (int i = 0; i < numHidden; i++)
+                for (int j = 0; j < numOutput; j++)
+                    hoWeights[i][j] = weights[k++];
+
+            for (int i = 0; i < numOutput; i++)
+                oBiases[i] = weights[k++];
+        }
+
+        public double[] ComputeOutputs(double[] xValues)
+        {
+            double[] hSums = new double[numHidden];
+            double[] oSums = new double[numOutput];
+
+            for (int i = 0; i < xValues.Length; i++)
+                inputs[i] = xValues[i];
+
+            for (int i = 0; i < numHidden; i++)
+                for (int j = 0; j < numInput; j++)
+                    hSums[i] += ihWeights[j][i] * inputs[j];
+
+            for (int i = 0; i < numHidden; i++)
+                hSums[i] += hBiases[i];
+
+            for (int i = 0; i < numHidden; i++)
+                hOutputs[i] = HyperTan(hSums[i]);
+
+            for (int i = 0; i < numHidden; i++)
+                for (int j = 0; j < numOutput; j++)
+                    oSums[j] += hoWeights[j][i] * hOutputs[j];
+
+            for (int i = 0; i < numOutput; i++)
+                oSums[i] += oBiases[i];
+
+            double[] softmaxOutputs = Softmax(oSums);
+            Array.Copy(softmaxOutputs, outputs, softmaxOutputs.Length);
+
+            double[] result = new double[numOutput];
+            Array.Copy(outputs, result, result.Length);
+
+            return result;
+        }
+
+        private double HyperTan(double v)
+        {
+            if (v < -20.0)
+                return -1;
+            else if (v > 20.0)
+                return 1;
+            else
+                return Math.Tanh(v);
+        }
+
+        private double[] Softmax(double[] oSums)
+        {
+            double max = oSums[0];
+
+            for (int i = 0; i < oSums.Length; i++)
+                if(max < oSums[i]) max = oSums[i];
+
+            double scale = 0.0;
+
+            for (int i = 0; i < oSums.Length; i++)
+                scale += Math.Exp(oSums[i] - max);
+
+            double[] result = new double[oSums.Length];
+
+            for (int i = 0; i < oSums.Length; i++)
+                result[i] = Math.Exp(oSums[i] - max) / scale;
+
+            return result;
+        }
+
+        public double[] Train(double[][] trainData, int nParticles, int nEpochs)
+        {
+            int numWeights = (numInput + 1) * numHidden + (numHidden + 1) * numOutput;
+
+            int epoch = 0;
+
+            double minX = -10.0;
+            double maxX = 10.0;
+            double w = 0.729;
+            double c1 = 1.49445;
+            double c2 = 1.49445;
+            double r1, r2;
+
+            Particle[] swarm = new Particle[nParticles];
+        }
     }
 }
