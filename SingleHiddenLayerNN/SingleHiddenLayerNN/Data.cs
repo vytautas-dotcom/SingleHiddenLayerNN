@@ -52,8 +52,8 @@ namespace SingleHiddenLayerNN
             Console.WriteLine("teal, 5.6, 1.8, virginica \n");
             Console.WriteLine("The independent variable color values are encoded using 1-of-(N-1) effects encoding.");
             Console.WriteLine("Where: ");
-            Console.WriteLine("Blue - [1.0, 0.0]");
-            Console.WriteLine("Pink - [0.0, 1.0]");
+            Console.WriteLine("Blue - [ 1.0,  0.0]");
+            Console.WriteLine("Pink - [ 0.0,  1.0]");
             Console.WriteLine("Teal - [-1.0, -1.0]");
             Console.WriteLine("The species values are encoded using 1-of-N encoding.");
             Console.WriteLine("Where: ");

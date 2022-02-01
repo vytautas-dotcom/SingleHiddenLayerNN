@@ -58,5 +58,14 @@ namespace SingleHiddenLayerNN
             for (int i = 0; i < testRows; i++)
                 testData[i] = copy[i + trainRows];
         }
+        public void ShowVector(double[] vector, int valsPerRow, int decimals, bool newLine)
+        {
+            for (int i = 0; i < vector.Length; ++i)
+            {
+                if (i % valsPerRow == 0) Console.WriteLine("");
+                Console.Write(vector[i].ToString("F" + decimals).PadLeft(decimals + 4) + " ");
+            }
+            if (newLine == true) Console.WriteLine("");
+        }
     }
 }
