@@ -43,7 +43,26 @@ namespace SingleHiddenLayerNN
             double testAcc = network.Accuracy(test);
             Console.WriteLine($"Accuracy on test data: {testAcc}");
 
+            Console.WriteLine(string.Format("\n--------------------------------------------"));
+            Console.WriteLine("\nBACK PROPAGATION");
+            Console.WriteLine(string.Format("\n--------------------------------------------"));
 
+            DataBackProp data1 = new DataBackProp();
+            showData.SplitData(data1.rawData, 37, out double[][] train1, out double[][] test1);
+
+            Console.WriteLine("Train data:");
+            showData.Show(train1, 10, 5, true);
+            Console.WriteLine("\nTest data:");
+            showData.Show(test1, 5, 2, true);
+
+            BackPropagationTrain back = new BackPropagationTrain(4, 7, 3);
+            back.Train(train, 1000, 0.05, 0.05);
+
+            double trainAccB = back.Accuracy(train);
+            Console.WriteLine($"Accuracy on train data: {trainAccB}");
+
+            double testAccB = back.Accuracy(test);
+            Console.WriteLine($"Accuracy on test data: {testAccB}");
         }
     }
 }
