@@ -56,12 +56,12 @@ namespace SingleHiddenLayerNN
             showData.Show(test1, 5, 2, true);
 
             BackPropagationTrain back = new BackPropagationTrain(4, 7, 3);
-            back.Train(train, 1000, 0.05, 0.05);
+            back.Train(train1, 1000, 0.05, 0.01);
 
-            double trainAccB = back.Accuracy(train);
+            double trainAccB = back.Accuracy(train1);
             Console.WriteLine($"Accuracy on train data: {trainAccB}");
 
-            double testAccB = back.Accuracy(test);
+            double testAccB = back.Accuracy(test1);
             Console.WriteLine($"Accuracy on test data: {testAccB}");
         }
     }

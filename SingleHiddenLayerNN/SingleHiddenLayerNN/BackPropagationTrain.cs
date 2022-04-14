@@ -233,7 +233,12 @@ namespace SingleHiddenLayerNN
             while (epoch < numEpoch)
             {
                 double mse = MeanSquareError(train);
-                if (mse < 0.040) break;
+                if (mse < 0.04)
+                {
+                    Console.WriteLine("epoch " + epoch);
+                    Console.WriteLine("mse " + mse);
+                    break; 
+                }
 
                 Shuffle(sequence);
 
